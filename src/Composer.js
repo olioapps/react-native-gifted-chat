@@ -6,9 +6,25 @@ import {
 } from 'react-native';
 
 export default class Composer extends React.Component {
+  componentWillReceiveProps(nextProps) {
+      if (nextProps.text !== this.props.text) {
+          this.refs.input.focus()
+      }
+  }
+
   render() {
+    fakeEvent = {
+          nativeEvent: {
+              contentSize: {
+                  height: 80,
+              },
+              text: this.props.text,
+          }
+      }
     return (
       <TextInput
+        ref="input"
+        onFocus={() => this.props.onChange(fakeEvent)}
         placeholder={this.props.placeholder}
         placeholderTextColor={this.props.placeholderTextColor}
         multiline={this.props.multiline}
