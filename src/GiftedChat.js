@@ -371,7 +371,7 @@ class GiftedChat extends React.Component {
   renderInputToolbar() {
     const inputToolbarProps = {
       ...this.props,
-      text: this.state.text || this.props.text,
+      text: this.props.text === '###CLEAR###' ? '' : (this.props.text !== this.state.text && this.props.text !== '###CLEAR###' ? this.props.text : this.state.text),
       composerHeight: Math.max(MIN_COMPOSER_HEIGHT, this.state.composerHeight),
       onChange: this.onType,
       onSend: this.onSend,
