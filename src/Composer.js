@@ -8,23 +8,23 @@ import {
 export default class Composer extends React.Component {
   componentWillReceiveProps(nextProps) {
       if (nextProps.text !== this.props.text) {
-          this.refs.input.focus()
+        const fakeEvent = {
+          nativeEvent: {
+            contentSize: {
+                height: nextProps.text === '###CLEAR###' || nextProps.text === '' ? 0 : 100,
+            },
+            text: nextProps.text === '###CLEAR###' || nextProps.text === '' ? '' : nextProps.text,
+          }
+        }
+        this.props.onChange(fakeEvent)
       }
   }
 
   render() {
-    fakeEvent = {
-          nativeEvent: {
-              contentSize: {
-                  height: 80,
-              },
-              text: this.props.text,
-          }
-      }
+
     return (
       <TextInput
-        ref="input"
-        onFocus={() => this.props.onChange(fakeEvent)}
+        value={this.props.text}
         placeholder={this.props.placeholder}
         placeholderTextColor={this.props.placeholderTextColor}
         multiline={this.props.multiline}
@@ -34,7 +34,6 @@ export default class Composer extends React.Component {
         style={[styles.textInput, this.props.textInputStyle, {
           height: this.props.composerHeight,
         }]}
-        value={this.props.text}
         enablesReturnKeyAutomatically={true}
         underlineColorAndroid="transparent"
         {...this.props.textInputProps}
