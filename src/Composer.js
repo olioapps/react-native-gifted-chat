@@ -6,9 +6,25 @@ import {
 } from 'react-native';
 
 export default class Composer extends React.Component {
+  componentWillReceiveProps(nextProps) {
+      if (nextProps.text !== this.props.text) {
+        const fakeEvent = {
+          nativeEvent: {
+            contentSize: {
+                height: nextProps.text === '' ? 0 : 100,
+            },
+            text: nextProps.text,
+          }
+        }
+        this.props.onChange(fakeEvent)
+      }
+  }
+
   render() {
+
     return (
       <TextInput
+        value={this.props.text}
         placeholder={this.props.placeholder}
         placeholderTextColor={this.props.placeholderTextColor}
         multiline={this.props.multiline}
@@ -18,7 +34,6 @@ export default class Composer extends React.Component {
         style={[styles.textInput, this.props.textInputStyle, {
           height: this.props.composerHeight,
         }]}
-        value={this.props.text}
         enablesReturnKeyAutomatically={true}
         underlineColorAndroid="transparent"
         {...this.props.textInputProps}
