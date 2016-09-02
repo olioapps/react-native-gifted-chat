@@ -11,9 +11,9 @@ export default class Composer extends React.Component {
         const fakeEvent = {
           nativeEvent: {
             contentSize: {
-                height: nextProps.text === '###CLEAR###' || nextProps.text === '' ? 0 : 100,
+                height: nextProps.text === '' ? 0 : 100,
             },
-            text: nextProps.text === '###CLEAR###' || nextProps.text === '' ? '' : nextProps.text,
+            text: nextProps.text,
           }
         }
         this.props.onChange(fakeEvent)
